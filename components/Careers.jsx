@@ -214,32 +214,29 @@ function RoleCard({ role, index, expandedIndex, onToggle }) {
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: EASE }}
-      layout
       className="group relative"
     >
-      <motion.div
-        layout
-        onClick={() => onToggle(index)}
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle(index);
+        }}
         className={`relative cursor-pointer overflow-hidden rounded-2xl border transition-all duration-500 ${
           isExpanded
             ? "border-slate-200/80 bg-white/90 shadow-[0_8px_40px_rgba(15,23,42,0.08)]"
-            : "border-slate-200/50 bg-white/60 shadow-[0_2px_16px_rgba(15,23,42,0.04)] hover:border-slate-200/80 hover:bg-white/80 hover:shadow-[0_8px_32px_rgba(15,23,42,0.07)]"
+            : "border-slate-200/50 bg-white/60 shadow-[0_2px_16px_rgba(15,23,42,0.04)] hover:border-slate-200/80 hover:bg-white/80 hover:shadow-[0_8px_32px_rgba(15,23,42,0.07)] hover:-translate-y-[3px] hover:scale-[1.015]"
         } backdrop-blur-xl`}
-        whileHover={!isExpanded ? { y: -3, scale: 1.015 } : {}}
-        transition={{ duration: 0.3, ease: EASE_OUT }}
       >
         {/* Glow on hover */}
-        <motion.div
-          className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl"
+        <div
+          className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl transition-opacity duration-500 ${
+            isExpanded ? "opacity-60" : "opacity-0 group-hover:opacity-50"
+          }`}
           style={{ background: role.glowColor }}
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 0.8 }}
-          animate={{ opacity: isExpanded ? 0.6 : 0 }}
-          transition={{ duration: 0.5 }}
         />
 
         {/* Main card content */}
-        <motion.div layout="position" className="relative z-10 p-6 md:p-7">
+        <div className="relative z-10 p-6 md:p-7">
           {/* Top row */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
@@ -285,7 +282,7 @@ function RoleCard({ role, index, expandedIndex, onToggle }) {
             animate={{ width: isExpanded ? "5rem" : "2.5rem" }}
             transition={{ duration: 0.5, ease: EASE }}
           />
-        </motion.div>
+        </div>
 
         {/* Expanded content */}
         <AnimatePresence>
@@ -373,7 +370,7 @@ function RoleCard({ role, index, expandedIndex, onToggle }) {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
