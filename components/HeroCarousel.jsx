@@ -17,6 +17,7 @@ const slides = [
     heading: "Slide Two",
     subtext: "A short placeholder description for the second slide.",
     buttonLabel: "Get Started",
+    videoSrc: "/videos/cybersec.mp4",
   },
   {
     id: 3,

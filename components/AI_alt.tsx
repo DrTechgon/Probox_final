@@ -10,7 +10,7 @@ export default function AI_alt() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-gray-50">
       {/* 3D Robot Background */}
-      <div className="absolute inset-0 z-0 opacity-80">
+      <div className="absolute inset-0 z-0 opacity-90" style={{ filter: 'sepia(1) hue-rotate(-15deg) saturate(3.5) brightness(1.05)' }}>
         <InteractiveRobotSpline
           scene={ROBOT_SCENE_URL}
           className="w-full h-full object-cover" 

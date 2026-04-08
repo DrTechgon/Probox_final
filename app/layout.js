@@ -25,8 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${manrope.variable} ${spaceGrotesk.variable} min-h-screen bg-slate-50 font-sans text-slate-900 antialiased`}
       >
-        <div className="relative isolate min-h-screen overflow-clip">
-          <div className="absolute inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.10),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(15,23,42,0.08),_transparent_28%)]" />
+        <div className="relative isolate min-h-screen">
           <Navbar />
           <main>{children}</main>
         </div>

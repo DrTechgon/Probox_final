@@ -1,0 +1,76 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#E0ECE5"/>
+  <rect x="48" y="48" width="1104" height="804" rx="40" fill="url(#bg)"/>
+  <g opacity="0.28">
+    <path d="M96 193H1104" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M96 386H1104" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M96 579H1104" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M96 772H1104" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M213 96V804" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M426 96V804" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M639 96V804" stroke="#3D6B50" stroke-width="2"/>
+    <path d="M852 96V804" stroke="#3D6B50" stroke-width="2"/>
+  </g>
+  <circle cx="960" cy="180" r="132" fill="url(#orb)"/>
+  <circle cx="960" cy="180" r="88" stroke="#F3F8F5" stroke-opacity="0.7" stroke-width="2"/>
+  <circle cx="960" cy="180" r="52" stroke="#F3F8F5" stroke-opacity="0.7" stroke-width="2"/>
+  <path d="M846 180H1074" stroke="#F3F8F5" stroke-opacity="0.7" stroke-width="2"/>
+  <path d="M960 66V294" stroke="#F3F8F5" stroke-opacity="0.7" stroke-width="2"/>
+  <g filter="url(#shadow)">
+    <rect x="138" y="208" width="420" height="474" rx="34" fill="#163527"/>
+    <rect x="168" y="240" width="360" height="110" rx="18" fill="#214733"/>
+    <rect x="168" y="374" width="360" height="110" rx="18" fill="#214733"/>
+    <rect x="168" y="508" width="360" height="110" rx="18" fill="#214733"/>
+    <circle cx="206" cy="295" r="10" fill="#71D39E"/>
+    <circle cx="238" cy="295" r="10" fill="#AEE7C7"/>
+    <circle cx="270" cy="295" r="10" fill="#F3F8F5"/>
+    <circle cx="206" cy="429" r="10" fill="#71D39E"/>
+    <circle cx="238" cy="429" r="10" fill="#AEE7C7"/>
+    <circle cx="270" cy="429" r="10" fill="#F3F8F5"/>
+    <circle cx="206" cy="563" r="10" fill="#71D39E"/>
+    <circle cx="238" cy="563" r="10" fill="#AEE7C7"/>
+    <circle cx="270" cy="563" r="10" fill="#F3F8F5"/>
+    <rect x="314" y="280" width="164" height="14" rx="7" fill="#AEE7C7" fill-opacity="0.72"/>
+    <rect x="314" y="312" width="116" height="10" rx="5" fill="#AEE7C7" fill-opacity="0.42"/>
+    <rect x="314" y="414" width="152" height="14" rx="7" fill="#AEE7C7" fill-opacity="0.72"/>
+    <rect x="314" y="446" width="128" height="10" rx="5" fill="#AEE7C7" fill-opacity="0.42"/>
+    <rect x="314" y="548" width="176" height="14" rx="7" fill="#AEE7C7" fill-opacity="0.72"/>
+    <rect x="314" y="580" width="102" height="10" rx="5" fill="#AEE7C7" fill-opacity="0.42"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="620" y="360" width="384" height="248" rx="32" fill="#F3F8F5"/>
+    <rect x="646" y="392" width="332" height="144" rx="20" fill="#D3E3DA"/>
+    <path d="M720 644L792 584H988" stroke="#3D6B50" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="696" cy="666" r="34" fill="#214733"/>
+    <circle cx="696" cy="666" r="14" fill="#AEE7C7"/>
+    <circle cx="834" cy="584" r="18" fill="#3D6B50"/>
+    <circle cx="986" cy="584" r="18" fill="#3D6B50"/>
+    <rect x="706" y="430" width="212" height="18" rx="9" fill="#3D6B50" fill-opacity="0.82"/>
+    <rect x="706" y="466" width="144" height="12" rx="6" fill="#3D6B50" fill-opacity="0.36"/>
+  </g>
+  <path d="M558 444C620 444 650 414 703 414" stroke="#71D39E" stroke-width="8" stroke-linecap="round" stroke-dasharray="1 20"/>
+  <path d="M558 518C624 518 646 542 703 542" stroke="#71D39E" stroke-width="8" stroke-linecap="round" stroke-dasharray="1 20"/>
+  <rect x="92" y="724" width="318" height="84" rx="24" fill="#F3F8F5" fill-opacity="0.72"/>
+  <text x="132" y="766" fill="#214733" font-family="Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="2">MANAGED IT</text>
+  <text x="132" y="796" fill="#3D6B50" font-family="Arial, sans-serif" font-size="18" letter-spacing="3">MONITORING   MAINTENANCE   SUPPORT</text>
+  <defs>
+    <linearGradient id="bg" x1="132" y1="96" x2="1038" y2="804" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF5F0"/>
+      <stop offset="1" stop-color="#C3D8CB"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 180) rotate(90) scale(132)">
+      <stop stop-color="#71D39E" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#71D39E" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="118" y="188" width="906" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="16"/>
+      <feGaussianBlur stdDeviation="10"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.192157 0 0 0 0 0.141176 0 0 0 0.16 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+  </defs>
+</svg>

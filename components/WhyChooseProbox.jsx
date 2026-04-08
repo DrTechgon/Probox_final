@@ -17,14 +17,14 @@ function ProboxWordmark() {
       <span className="sr-only">Probox</span>
       <span
         aria-hidden="true"
-        className="relative inline-block h-[0.76em] w-[3.42em] overflow-hidden align-[-0.05em]"
+        className="relative inline-block h-[0.9em] w-[3.9em] overflow-hidden align-[-0.08em]"
       >
         <Image
           src="/brand/probox-logo-wordmark-transparent.png"
           alt=""
           width={953}
           height={266}
-          className="absolute left-0 top-[-0.16em] h-[1.42em] w-auto max-w-none"
+          className="absolute left-0 top-[-0.08em] h-[1.6em] w-auto max-w-none"
         />
       </span>
     </>
@@ -201,22 +201,8 @@ export default function WhyChooseProbox() {
     <section
       ref={sectionRef}
       id="why-probox"
-      className="relative bg-[#f8fafc] py-24 md:py-32 md:pb-48"
+      className="relative py-24 md:py-32 md:pb-48"
     >
-      {/* ── Background decoration ── */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* Top radial */}
-        <div className="absolute -right-60 -top-60 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.06),_transparent_70%)]" />
-        {/* Bottom radial */}
-        <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,_rgba(139,92,246,0.05),_transparent_70%)]" />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f172a' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-      </div>
 
       {/* ── Dynamic glow following active card ── */}
       {features.map((feature, i) => (
