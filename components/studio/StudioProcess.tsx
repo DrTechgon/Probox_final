@@ -43,6 +43,8 @@ const STAGES = [
   },
 ];
 
+type StageIndex = 0 | 1 | 2;
+
 export default function StudioProcess() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -62,7 +64,7 @@ export default function StudioProcess() {
   const precFill = useTransform(prog, [0.58, 0.95], [0, 1]);
 
   /* Stage index for caption */
-  const captionIdx = useTransform(prog, (v) => {
+  const captionIdx = useTransform<number, StageIndex>(prog, (v) => {
     if (v < 0.38) return 0;
     if (v < 0.72) return 1;
     return 2;
@@ -160,7 +162,7 @@ export default function StudioProcess() {
 }
 
 function StageTag({ prog }: { prog: MotionValue<number> }) {
-  const label = useTransform(prog, (v: number) =>
+  const label = useTransform<number, string>(prog, (v) =>
     v < 0.38 ? "Stage · Fog" : v < 0.72 ? "Stage · Structure" : "Stage · Precision"
   );
   return <motion.span>{label}</motion.span>;
@@ -172,11 +174,11 @@ function StageCaption({
   i,
 }: {
   stage: (typeof STAGES)[number];
-  activeIdx: MotionValue<number>;
+  activeIdx: MotionValue<StageIndex>;
   i: number;
 }) {
-  const opacity = useTransform(activeIdx, (v: number) => (Math.round(v) === i ? 1 : 0));
-  const y = useTransform(activeIdx, (v: number) => (Math.round(v) === i ? 0 : 8));
+  const opacity = useTransform(activeIdx, (v) => (v === i ? 1 : 0));
+  const y = useTransform(activeIdx, (v) => (v === i ? 0 : 8));
 
   return (
     <motion.div
