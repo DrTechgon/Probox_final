@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -38,6 +38,7 @@ const features = [
     title: "Performance First",
     description:
       "Every millisecond matters. We engineer systems optimised at the infrastructure level — from edge-cached APIs to zero-bloat frontends — so your products load instantly and scale without friction.",
+    visualNote: "Latency-cutting infrastructure designed for seamless delivery.",
     accent: "from-sky-400 to-blue-500",
     glowColor: "rgba(56,189,248,0.10)",
     iconBg: "bg-sky-50",
@@ -49,6 +50,7 @@ const features = [
     title: "AI-Driven Systems",
     description:
       "We embed intelligence where it counts — predictive analytics, NLP pipelines, and computer vision modules that transform raw data into real-time decisions, not just dashboards.",
+    visualNote: "Decision engines built for operations, not demo screens.",
     accent: "from-violet-400 to-purple-500",
     glowColor: "rgba(139,92,246,0.10)",
     iconBg: "bg-violet-50",
@@ -60,6 +62,7 @@ const features = [
     title: "Security by Design",
     description:
       "Security isn't a patch — it's the foundation. Every system we build is hardened with zero-trust architecture, end-to-end encryption, and continuous threat monitoring baked into the CI/CD pipeline.",
+    visualNote: "Zero-trust thinking integrated into every system layer.",
     accent: "from-emerald-400 to-teal-500",
     glowColor: "rgba(52,211,153,0.10)",
     iconBg: "bg-emerald-50",
@@ -71,6 +74,7 @@ const features = [
     title: "Built to Scale",
     description:
       "From startup MVPs to enterprise deployments handling millions of requests — our architectures grow with you. Microservices, auto-scaling infrastructure, and event-driven design ensure you never hit a ceiling.",
+    visualNote: "Architectures that stay stable as complexity compounds.",
     accent: "from-amber-400 to-orange-500",
     glowColor: "rgba(251,191,36,0.10)",
     iconBg: "bg-amber-50",
@@ -175,10 +179,91 @@ function ScrollProgress({ progress }) {
   );
 }
 
+function VisualPanel({ activeFeature, activeIndex, mobile = false }) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/70 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl ${
+        mobile ? "mt-8" : "mt-10"
+      }`}
+    >
+      <div className={`relative ${mobile ? "aspect-[4/5]" : "aspect-[4/5]"} overflow-hidden`}>
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            scale: 1.02 + activeIndex * 0.015,
+            x: activeIndex % 2 === 0 ? 0 : -10,
+            y: -6 - activeIndex * 4,
+          }}
+          transition={{ duration: 1.2, ease: EASE }}
+        >
+          <Image
+            src="/website/why-probox-control-room.jpg"
+            alt="Probox technology operations environment with secure infrastructure and monitoring systems"
+            fill
+            sizes={mobile ? "100vw" : "(min-width: 1024px) 34vw, 100vw"}
+            className="object-cover"
+          />
+        </motion.div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-white/5" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/55 via-slate-950/10 to-transparent" />
+        <motion.div
+          className="pointer-events-none absolute -right-10 top-6 h-40 w-40 rounded-full blur-3xl"
+          animate={{ opacity: 0.9, scale: 1 }}
+          transition={{ duration: 0.8, ease: EASE }}
+          style={{ background: activeFeature.glowColor }}
+        />
+
+        <div className="absolute left-4 top-4">
+          <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[0.62rem] font-medium uppercase tracking-[0.22em] text-white/72 backdrop-blur-md">
+            Strategy • Systems • Security
+          </div>
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+          <div className="max-w-md rounded-[1.5rem] border border-white/12 bg-slate-950/45 p-5 shadow-[0_14px_36px_rgba(15,23,42,0.22)] backdrop-blur-md">
+            <p className="text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/58">
+              Inside Probox
+            </p>
+            <motion.h3
+              key={activeFeature.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: EASE }}
+              className="mt-3 font-display text-[1.35rem] font-bold leading-tight tracking-tight text-white md:text-[1.55rem]"
+            >
+              {activeFeature.title}
+            </motion.h3>
+            <motion.p
+              key={activeFeature.visualNote}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.04, ease: EASE }}
+              className="mt-2 max-w-sm text-[0.84rem] leading-relaxed text-white/70"
+            >
+              {activeFeature.visualNote}
+            </motion.p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["AI Ops", "Zero Trust", "Cloud Scale"].map((pill) => (
+                <span
+                  key={pill}
+                  className="rounded-full border border-white/12 bg-white/8 px-3 py-1 text-[0.68rem] font-medium tracking-[0.08em] text-white/72"
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main Section ─────────────────────────────────────────── */
 export default function WhyChooseProbox() {
   const sectionRef = useRef(null);
-  const rightColRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   /* Scroll tracking for the right column */
@@ -247,6 +332,11 @@ export default function WhyChooseProbox() {
                 <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-slate-500">
                   We don&apos;t just build technology — we engineer competitive advantages that compound over time.
                 </p>
+
+                <VisualPanel
+                  activeFeature={features[activeIndex]}
+                  activeIndex={activeIndex}
+                />
               </motion.div>
 
               {/* Scroll progress indicator */}
@@ -290,7 +380,7 @@ export default function WhyChooseProbox() {
             </div>
 
           {/* RIGHT — Feature cards with scroll progress */}
-          <div ref={rightColRef} className="relative w-1/2 lg:w-[58.333%] pl-8">
+          <div className="relative w-1/2 lg:w-[58.333%] pl-8">
             {/* Vertical progress line */}
             <ScrollProgress progress={scrollYProgress} />
 
@@ -330,6 +420,12 @@ export default function WhyChooseProbox() {
             <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-slate-500">
               We don&apos;t just build technology — we engineer competitive advantages that compound over time.
             </p>
+
+            <VisualPanel
+              activeFeature={features[activeIndex]}
+              activeIndex={activeIndex}
+              mobile
+            />
           </motion.div>
 
           {/* Cards */}

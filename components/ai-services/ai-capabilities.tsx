@@ -264,7 +264,7 @@ function PreviewPanel({
 
       <motion.div variants={staggerItem} className="mt-auto pt-8">
         <a
-          href="#"
+          href="#contact"
           className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#d79a5d] bg-[#c98545] px-6 py-3 text-sm font-semibold text-[#0f2145] shadow-[0_12px_28px_rgba(201,133,69,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(201,133,69,0.30)]"
         >
           <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[100%]" />
@@ -367,7 +367,7 @@ function MobileAccordionItem({
                 ))}
               </div>
               <a
-                href="#"
+                href="#contact"
                 className="group mt-5 inline-flex items-center gap-2.5 rounded-full border border-[#d79a5d] bg-[#c98545] px-5 py-2.5 text-xs font-semibold text-[#0f2145] shadow-[0_10px_24px_rgba(201,133,69,0.22)] transition-all duration-300 hover:bg-[#b87435]"
               >
                 <span>Learn More</span>
@@ -395,7 +395,7 @@ export default function AICapabilities() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white py-20 text-slate-900 md:py-28">
+    <section id="capabilities" className="relative overflow-hidden bg-white py-20 text-slate-900 md:py-28">
       {/* Background decoration */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.12),_transparent_52%)]" />
 

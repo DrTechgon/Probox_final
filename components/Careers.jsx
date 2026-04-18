@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import { useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -19,6 +20,7 @@ import {
   Cpu,
   X,
 } from "lucide-react";
+import { PointerArrow } from "@/components/ui/pointer-arrow";
 
 const EASE = [0.22, 1, 0.36, 1];
 const EASE_OUT = [0.16, 1, 0.3, 1];
@@ -495,7 +497,7 @@ function CultureMarquee() {
 }
 
 /* ─── CTA Button with Ripple ─────────────────────────────────── */
-function CTAButton() {
+function CTAButton({ ctaRef }) {
   const [ripple, setRipple] = useState(null);
 
   const handleClick = (e) => {
@@ -509,6 +511,7 @@ function CTAButton() {
 
   return (
     <motion.button
+      ref={ctaRef}
       data-testid="explore-roles-cta"
       onClick={handleClick}
       className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#c98545]/30 bg-gradient-to-r from-[#c98545] to-[#d4a060] px-10 py-4 text-[0.9rem] font-semibold text-white shadow-[0_12px_40px_rgba(201,133,69,0.25)] transition-all duration-500 hover:shadow-[0_20px_60px_rgba(201,133,69,0.35)]"
@@ -553,13 +556,136 @@ function CTAButton() {
   );
 }
 
+/* ─── Team Photo Grid ────────────────────────────────────────── */
+const teamPhotos = [
+  {
+    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
+    alt: "Team collaborating around a table",
+    label: "Collaboration",
+    span: "tall",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    alt: "Modern open office workspace",
+    label: "Our Space",
+    span: "normal",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
+    alt: "Team members working on laptops",
+    label: "Deep Work",
+    span: "normal",
+  },
+];
+
+function TeamPhotos() {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  return (
+    <div ref={sectionRef} className="mb-24 md:mb-32">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: EASE }}
+        className="mb-10 flex items-center gap-3"
+      >
+        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-slate-400">
+          Life at Probox
+        </span>
+        <div className="h-px flex-1 bg-gradient-to-r from-slate-200/80 to-transparent" />
+      </motion.div>
+
+      {/*
+        Desktop layout (lg+):
+          [ Photo 1 — tall portrait ]  [ Photo 2 — wide landscape ]
+          [ (left col, full height) ]  [ Photo 3 — wide landscape ]
+
+        Left col is 2/5 width, right col is 3/5.
+        Explicit row heights keep both sides flush at the same total height.
+      */}
+      <div className="flex flex-col gap-3 lg:flex-row lg:h-[540px]">
+
+        {/* LEFT — tall photo, full height */}
+        <motion.div
+          initial={{ opacity: 0, x: -20, scale: 0.98 }}
+          animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.05, ease: EASE }}
+          className="group relative overflow-hidden rounded-2xl h-72 lg:h-full lg:w-2/5 shrink-0"
+        >
+          <Image
+            src={teamPhotos[0].src}
+            alt={teamPhotos[0].alt}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/55 via-slate-900/10 to-transparent" />
+          <span className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-md">
+            {teamPhotos[0].label}
+          </span>
+        </motion.div>
+
+        {/* RIGHT — two stacked photos with explicit heights */}
+        <div className="flex flex-col gap-3 lg:flex-1 lg:h-full">
+
+          {/* Top-right: taller (60% of total height) */}
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.98 }}
+            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+            className="group relative overflow-hidden rounded-2xl h-56 lg:h-[57%]"
+          >
+            <Image
+              src={teamPhotos[1].src}
+              alt={teamPhotos[1].alt}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(min-width: 1024px) 58vw, 100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/55 via-slate-900/10 to-transparent" />
+            <span className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-md">
+              {teamPhotos[1].label}
+            </span>
+          </motion.div>
+
+          {/* Bottom-right: shorter (40% of total height) */}
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.98 }}
+            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+            className="group relative overflow-hidden rounded-2xl h-48 lg:flex-1"
+          >
+            <Image
+              src={teamPhotos[2].src}
+              alt={teamPhotos[2].alt}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(min-width: 1024px) 58vw, 100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/55 via-slate-900/10 to-transparent" />
+            <span className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-md">
+              {teamPhotos[2].label}
+            </span>
+          </motion.div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════
    MAIN SECTION
    ═══════════════════════════════════════════════════════════════ */
 export default function Careers() {
   const sectionRef = useRef(null);
   const introRef = useRef(null);
+  const ctaBlockRef = useRef(null);
+  const ctaRef = useRef(null);
   const introInView = useInView(introRef, { once: true, amount: 0.3 });
+  const ctaVisible = useInView(ctaBlockRef, { amount: 0.35 });
   const [expandedRole, setExpandedRole] = useState(null);
 
   const handleToggle = (index) => {
@@ -575,6 +701,13 @@ export default function Careers() {
     >
       {/* Animated background shapes */}
       <FloatingShapes />
+
+      <PointerArrow
+        active={ctaVisible}
+        color="rgba(201, 133, 69, 1)"
+        containerRef={sectionRef}
+        targetRef={ctaRef}
+      />
 
       {/* Subtle dot grid pattern */}
       <div
@@ -668,7 +801,12 @@ export default function Careers() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-           3. WHY JOIN US
+           3. TEAM PHOTOS
+           ══════════════════════════════════════════════════════════ */}
+        <TeamPhotos />
+
+        {/* ══════════════════════════════════════════════════════════
+           4. WHY JOIN US
            ══════════════════════════════════════════════════════════ */}
         <div className="mb-20 md:mb-28">
           <motion.div
@@ -700,7 +838,7 @@ export default function Careers() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-           4. CULTURE / TEAM VIBE STRIP
+           5. CULTURE / TEAM VIBE STRIP
            ══════════════════════════════════════════════════════════ */}
         <div className="mb-20 md:mb-28">
           <motion.div
@@ -714,9 +852,10 @@ export default function Careers() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-           5. CTA BLOCK
+           6. CTA BLOCK
            ══════════════════════════════════════════════════════════ */}
         <motion.div
+          ref={ctaBlockRef}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -731,7 +870,7 @@ export default function Careers() {
               We&apos;re always looking for exceptional people
             </p>
 
-            <CTAButton />
+            <CTAButton ctaRef={ctaRef} />
 
             <p className="mt-6 text-[0.8rem] text-slate-400">
               Remote-first &middot; Competitive equity &middot; Unlimited growth

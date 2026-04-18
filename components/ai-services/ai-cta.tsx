@@ -6,7 +6,7 @@ import { EASE } from "./data";
 
 export default function AICTA() {
   return (
-    <section className="relative bg-white py-24 md:py-32">
+    <section id="contact" className="relative bg-white py-24 md:py-32">
       <div className="relative mx-auto max-w-4xl px-6 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.98 }}
@@ -50,7 +50,7 @@ export default function AICTA() {
               className="mt-8"
             >
               <a
-                href="#"
+                href="mailto:hello@proboxinfotech.com"
                 className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#d79a5d] bg-[#c98545] px-8 py-4 text-base font-semibold text-[#0f2145] shadow-[0_16px_30px_rgba(201,133,69,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_rgba(201,133,69,0.32)]"
               >
                 <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[100%]" />
@@ -70,10 +70,10 @@ export default function AICTA() {
             >
               Or reach us at{" "}
               <a
-                href="mailto:hello@probox.com"
+                href="mailto:hello@proboxinfotech.com"
                 className="underline underline-offset-4 transition-colors hover:text-[#c98545]"
               >
-                hello@probox.com
+                hello@proboxinfotech.com
               </a>
             </motion.p>
           </div>

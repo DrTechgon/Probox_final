@@ -13,7 +13,7 @@ export default function Services() {
       className="relative text-slate-900"
     >
       {/* ── Section header ── */}
-      <div className="relative z-10 pt-20 pb-14 md:pt-32 md:pb-20">
+      <div className="relative z-10 pt-10 pb-14 md:pt-16 md:pb-20">
         <div className="relative mx-auto max-w-6xl px-6 md:px-8">
           <div className="text-center">
             <motion.div
@@ -22,7 +22,8 @@ export default function Services() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: EASE }}
             >
-              <span className="mb-4 inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-slate-400 shadow-sm">
+              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-slate-500 shadow-sm backdrop-blur-sm">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#c98545] shadow-[0_0_8px_#c98545]" />
                 Our Services
               </span>
             </motion.div>
@@ -31,11 +32,11 @@ export default function Services() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
-              className="text-4xl font-bold tracking-tight md:text-6xl"
+              transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
+              className="font-display text-balance text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-6xl"
             >
               <span className="inline-flex flex-wrap items-baseline justify-center gap-x-3 gap-y-2">
-                <span>What</span>
+                <span className="text-slate-900">What</span>
                 <span className="sr-only">Probox</span>
                 <span
                   aria-hidden="true"
@@ -49,7 +50,9 @@ export default function Services() {
                     className="absolute left-0 top-[-0.08em] h-[1.6em] w-auto max-w-none"
                   />
                 </span>
-                <span>Does</span>
+                <span className="bg-gradient-to-r from-slate-900 via-[#c98545] to-slate-900 bg-clip-text text-transparent">
+                  Does
+                </span>
               </span>
             </motion.h2>
 
@@ -58,11 +61,20 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.16, ease: EASE }}
-              className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg"
+              className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-500 md:text-lg"
             >
-              We deliver cutting-edge technology solutions that transform
-              businesses and accelerate growth across every vertical.
+              Cutting-edge technology, engineered with intent — we turn complex
+              problems into systems that ship, scale, and stay reliable.
             </motion.p>
+
+            {/* Decorative underline */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+              className="mx-auto mt-10 h-px w-24 origin-center bg-gradient-to-r from-transparent via-slate-300 to-transparent"
+            />
           </div>
         </div>
       </div>

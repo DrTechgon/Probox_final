@@ -80,7 +80,7 @@ export default function AIHero() {
           {/* CTA */}
           <motion.div variants={fadeUp} className="mt-8">
             <a
-              href="#"
+              href="#capabilities"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#d79a5d] bg-[#c98545] px-7 py-3.5 text-sm font-semibold text-[#0f2145] shadow-[0_16px_30px_rgba(201,133,69,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_40px_rgba(201,133,69,0.32)]"
             >
               <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[100%]" />

@@ -1,0 +1,94 @@
+/* Scoped studio design tokens — active only under .studio-root */
+.studio-root {
+  --s-bone: #faf7f2;
+  --s-pearl: #f0ece4;
+  --s-soft: #e8e3d8;
+  --s-fog: #d6d3ce;
+  --s-haze: #c9c5bd;
+  --s-line: #b9b5ac;
+  --s-ink: #1c1a17;
+  --s-ink-2: #3a362f;
+  --s-muted: #6e6a62;
+  --s-amber: #a8794a;
+  --s-amber-soft: #c9a378;
+  --s-lav: #b7b2c4;
+  --s-silver: #c5ccd2;
+
+  color: var(--s-ink);
+  background: var(--s-bone);
+  font-family: var(--font-sans);
+}
+
+.studio-root ::selection {
+  background: rgba(168, 121, 74, 0.25);
+  color: var(--s-ink);
+}
+
+/* Editorial hairline rule */
+.studio-hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(28, 26, 23, 0.2) 16%,
+    rgba(28, 26, 23, 0.2) 84%,
+    transparent 100%
+  );
+}
+
+/* Paper grain overlay */
+.studio-paper {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC45MCIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjYSkiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=");
+}
+
+/* Hairline grid (baseline, fades out at edges) */
+.studio-baseline {
+  background-image:
+    linear-gradient(to right, rgba(28, 26, 23, 0.035) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* Dot grid (used behind chapter markers) */
+.studio-dots {
+  background-image: radial-gradient(rgba(28, 26, 23, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Serif italic accent shorthand */
+.studio-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Display shorthand */
+.studio-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+/* Drawn-line keyframe used in CTA */
+@keyframes studio-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Slow float for ambient labels */
+@keyframes studio-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -4px, 0); }
+}
+
+.studio-float {
+  animation: studio-drift 7s ease-in-out infinite;
+}
+
+/* Remove the default site scrollbar gradient on studio for a cleaner feel */
+.studio-root::-webkit-scrollbar-thumb { display: none; }
+
+/* Button reset */
+.studio-root button { font-family: inherit; }

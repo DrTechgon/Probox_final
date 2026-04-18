@@ -1,33 +1,55 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
+import Magnetic from "@/components/ui/magnetic";
 
 const slides = [
   {
     id: 1,
-    heading: "Slide One",
-    subtext: "A short placeholder description for the first slide.",
-    buttonLabel: "Learn More",
+    eyebrow: "AI + Engineering",
+    heading: "Intelligence, engineered.",
+    subtext:
+      "Production-grade AI systems that turn raw data into decisions — not dashboards.",
+    buttonLabel: "Explore AI Solutions",
     videoSrc: "/videos/AI_Abstract_Background_Video_Generation.mp4",
   },
   {
     id: 2,
-    heading: "Slide Two",
-    subtext: "A short placeholder description for the second slide.",
-    buttonLabel: "Get Started",
+    eyebrow: "Secure by Design",
+    heading: "Defense without the friction.",
+    subtext:
+      "Zero-trust architecture, continuous monitoring, and hardened pipelines — baked in from day zero.",
+    buttonLabel: "See Our Approach",
     videoSrc: "/videos/cybersec.mp4",
   },
   {
     id: 3,
-    heading: "Slide Three",
-    subtext: "A short placeholder description for the third slide.",
-    buttonLabel: "Explore",
+    eyebrow: "Cloud · Scale · Speed",
+    heading: "Built to ship. Ready to scale.",
+    subtext:
+      "From prototype to millions of requests — infrastructure that grows with you, never holds you back.",
+    buttonLabel: "Start Your Build",
   },
 ];
 
-const AUTOPLAY_MS = 6000;
+const TRUSTED_MARKS = [
+  "Enterprise-grade",
+  "ISO 27001 aligned",
+  "Global delivery",
+  "24 / 7 engineering",
+  "SOC 2 minded",
+  "Remote-first ops",
+];
+
+const AUTOPLAY_MS = 6500;
 const TRANSITION_EASE = [0.22, 1, 0.36, 1];
 
 const wrapIndex = (index, total) => ((index % total) + total) % total;
@@ -38,6 +60,19 @@ export default function HeroCarousel() {
   const [isPaused, setIsPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const pointerIdleTimeoutRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  /* Parallax + fade as user scrolls past hero */
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.35, 0.85]);
 
   const total = slides.length;
   const activeSlide = slides[current];
@@ -60,43 +95,28 @@ export default function HeroCarousel() {
 
   const goToSlide = useCallback(
     (index) => {
-      if (index === current) {
-        return;
-      }
-
+      if (index === current) return;
       const forwardDistance = (index - current + total) % total;
       const backwardDistance = (current - index + total) % total;
-
       paginate(index, forwardDistance <= backwardDistance ? 1 : -1);
     },
     [current, paginate, total]
   );
 
   useEffect(() => {
-    if (isPaused || total <= 1) {
-      return;
-    }
-
+    if (isPaused || total <= 1) return;
     const timeoutId = window.setTimeout(() => {
       paginate(current + 1, 1);
     }, AUTOPLAY_MS);
-
     return () => window.clearTimeout(timeoutId);
   }, [current, isPaused, paginate, total]);
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === "ArrowLeft") {
-        prevSlide();
-      }
-
-      if (event.key === "ArrowRight") {
-        nextSlide();
-      }
+      if (event.key === "ArrowLeft") prevSlide();
+      if (event.key === "ArrowRight") nextSlide();
     };
-
     window.addEventListener("keydown", onKeyDown);
-
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [nextSlide, prevSlide]);
 
@@ -107,8 +127,8 @@ export default function HeroCarousel() {
         : {
             x: customDirection > 0 ? "8%" : "-8%",
             opacity: 0,
-            scale: 0.985,
-            filter: "blur(10px)",
+            scale: 1.04,
+            filter: "blur(14px)",
           },
     center: {
       x: 0,
@@ -118,10 +138,10 @@ export default function HeroCarousel() {
       transition: prefersReducedMotion
         ? { duration: 0.2 }
         : {
-            x: { duration: 0.9, ease: TRANSITION_EASE },
-            opacity: { duration: 0.55, ease: "easeOut" },
-            scale: { duration: 0.9, ease: TRANSITION_EASE },
-            filter: { duration: 0.55, ease: "easeOut" },
+            x: { duration: 1.1, ease: TRANSITION_EASE },
+            opacity: { duration: 0.7, ease: "easeOut" },
+            scale: { duration: 1.1, ease: TRANSITION_EASE },
+            filter: { duration: 0.7, ease: "easeOut" },
           },
     },
     exit: (customDirection) =>
@@ -130,13 +150,13 @@ export default function HeroCarousel() {
         : {
             x: customDirection > 0 ? "-6%" : "6%",
             opacity: 0,
-            scale: 1.015,
-            filter: "blur(12px)",
+            scale: 0.98,
+            filter: "blur(14px)",
             transition: {
-              x: { duration: 0.75, ease: TRANSITION_EASE },
-              opacity: { duration: 0.4, ease: "easeOut" },
-              scale: { duration: 0.75, ease: TRANSITION_EASE },
-              filter: { duration: 0.4, ease: "easeOut" },
+              x: { duration: 0.9, ease: TRANSITION_EASE },
+              opacity: { duration: 0.5, ease: "easeOut" },
+              scale: { duration: 0.9, ease: TRANSITION_EASE },
+              filter: { duration: 0.5, ease: "easeOut" },
             },
           },
   };
@@ -146,37 +166,29 @@ export default function HeroCarousel() {
     visible: {
       transition: prefersReducedMotion
         ? { staggerChildren: 0 }
-        : {
-            delayChildren: 0.12,
-            staggerChildren: 0.08,
-          },
+        : { delayChildren: 0.15, staggerChildren: 0.08 },
     },
   };
 
   const contentItemVariants = {
     hidden: prefersReducedMotion
       ? { opacity: 0 }
-      : { opacity: 0, y: 24, filter: "blur(6px)" },
+      : { opacity: 0, y: 28, filter: "blur(6px)" },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       transition: prefersReducedMotion
         ? { duration: 0.2 }
-        : {
-            duration: 0.6,
-            ease: TRANSITION_EASE,
-          },
+        : { duration: 0.75, ease: TRANSITION_EASE },
     },
   };
 
   const pauseWhilePointerMoves = () => {
     setIsPaused(true);
-
     if (pointerIdleTimeoutRef.current) {
       window.clearTimeout(pointerIdleTimeoutRef.current);
     }
-
     pointerIdleTimeoutRef.current = window.setTimeout(() => {
       setIsPaused(false);
     }, 220);
@@ -187,7 +199,6 @@ export default function HeroCarousel() {
       window.clearTimeout(pointerIdleTimeoutRef.current);
       pointerIdleTimeoutRef.current = null;
     }
-
     setIsPaused(false);
   };
 
@@ -201,13 +212,22 @@ export default function HeroCarousel() {
 
   return (
     <section
-      className="relative h-screen w-full select-none overflow-hidden"
+      ref={sectionRef}
+      className="relative h-screen min-h-[680px] w-full select-none overflow-hidden"
       onMouseMove={pauseWhilePointerMoves}
       onMouseLeave={resumeAutoplay}
       aria-roledescription="carousel"
       aria-label="Hero carousel"
     >
-      <div className="relative h-full w-full">
+      {/* ── Parallax media stage ── */}
+      <motion.div
+        className="absolute inset-0"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : { y: mediaY, scale: mediaScale }
+        }
+      >
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={activeSlide.id}
@@ -216,7 +236,7 @@ export default function HeroCarousel() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="absolute inset-0 overflow-hidden bg-white"
+            className="absolute inset-0 overflow-hidden bg-[#0b1020]"
           >
             {activeSlide.videoSrc ? (
               <video
@@ -226,95 +246,195 @@ export default function HeroCarousel() {
                 loop
                 playsInline
                 preload="metadata"
+                key={activeSlide.videoSrc}
               >
                 <source src={activeSlide.videoSrc} type="video/mp4" />
               </video>
-            ) : null}
+            ) : (
+              <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_20%_20%,rgba(201,133,69,0.35),transparent_45%),radial-gradient(900px_circle_at_80%_70%,rgba(56,189,248,0.28),transparent_45%)]" />
+            )}
+            <div className="hero-noise absolute inset-0 opacity-[0.35] mix-blend-overlay" />
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
 
-            {!activeSlide.videoSrc ? <div className="hero-noise absolute inset-0 opacity-20" /> : null}
+      {/* ── Cinematic vignette overlays ── */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(4,8,20,0.7)_100%)]"
+        style={prefersReducedMotion ? undefined : { opacity: overlayOpacity }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-transparent via-transparent to-[#f7f2eb]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-32 bg-gradient-to-b from-black/35 to-transparent"
+      />
+
+      {/* ── Corner brackets (production feel) ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[3] hidden md:block"
+      >
+        <div className="absolute left-8 top-24 h-10 w-10 border-l border-t border-white/25" />
+        <div className="absolute right-8 top-24 h-10 w-10 border-r border-t border-white/25" />
+        <div className="absolute left-8 bottom-28 h-10 w-10 border-l border-b border-white/25" />
+        <div className="absolute right-8 bottom-28 h-10 w-10 border-r border-b border-white/25" />
+      </div>
+
+      {/* ── Fixed meta chrome (top-left ID + top-right slide count) ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-24 z-[4] hidden justify-between px-10 md:flex"
+      >
+        <div className="flex items-center gap-2 text-[0.65rem] font-medium uppercase tracking-[0.3em] text-white/60">
+          <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#c98545] shadow-[0_0_10px_#c98545]" />
+          Probox · Live Reel
+        </div>
+        <div className="font-display text-[0.65rem] uppercase tracking-[0.3em] text-white/60">
+          Frame {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </div>
+      </div>
+
+      {/* ── Slide content ── */}
+      <motion.div
+        className="relative z-[5] flex h-full w-full items-center justify-center px-6"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : { y: contentY, opacity: contentOpacity }
+        }
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={`content-${activeSlide.id}`}
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="flex max-w-4xl flex-col items-center text-center"
+          >
+            <motion.span
+              variants={contentItemVariants}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[0.7rem] font-medium uppercase tracking-[0.25em] text-white/75 backdrop-blur-md"
+            >
+              <Sparkles className="h-3 w-3 text-[#e8a869]" strokeWidth={2} />
+              {activeSlide.eyebrow}
+            </motion.span>
+
+            <motion.h1
+              variants={contentItemVariants}
+              className="font-display text-balance text-[clamp(2.5rem,6.5vw,5.75rem)] font-bold leading-[1.02] tracking-[-0.035em] text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.4)]"
+            >
+              {activeSlide.heading}
+            </motion.h1>
+
+            <motion.p
+              variants={contentItemVariants}
+              className="mx-auto mt-6 max-w-xl text-pretty text-[clamp(0.95rem,1.55vw,1.15rem)] leading-relaxed text-white/75"
+            >
+              {activeSlide.subtext}
+            </motion.p>
 
             <motion.div
-              variants={contentVariants}
-              initial="hidden"
-              animate="visible"
-              className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center"
+              variants={contentItemVariants}
+              className="mt-10 flex flex-col items-center gap-5 sm:flex-row sm:gap-6"
             >
-              <motion.span
-                variants={contentItemVariants}
-                className="mb-5 inline-block rounded-full border border-slate-900/10 bg-slate-900/[0.04] px-4 py-1.5 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-slate-400"
-              >
-                {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-              </motion.span>
-
-              <motion.h1
-                variants={contentItemVariants}
-                className="max-w-3xl text-[clamp(2.25rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-slate-900"
-              >
-                {activeSlide.heading}
-              </motion.h1>
-
-              <motion.p
-                variants={contentItemVariants}
-                className="mx-auto mt-5 max-w-md text-[clamp(0.875rem,1.5vw,1.125rem)] leading-relaxed text-slate-400 sm:mt-6"
-              >
-                {activeSlide.subtext}
-              </motion.p>
-
-              <motion.div variants={contentItemVariants} className="mt-9 sm:mt-10">
-                <button className="rounded-full border border-slate-900/15 bg-slate-900/[0.05] px-8 py-3.5 text-[0.8rem] font-medium tracking-wide text-slate-700 transition-all duration-300 hover:border-slate-900/25 hover:bg-slate-900/[0.1] hover:text-slate-900">
-                  {activeSlide.buttonLabel}
+              <Magnetic>
+                <button className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#e8a869]/40 bg-[#c98545] px-8 py-4 text-[0.85rem] font-semibold text-white shadow-[0_16px_40px_rgba(201,133,69,0.4)] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(201,133,69,0.55)]">
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -z-0 translate-x-[-105%] bg-gradient-to-r from-[#d4a060] via-[#e8a869] to-[#d4a060] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0"
+                  />
+                  <span className="relative z-10">{activeSlide.buttonLabel}</span>
+                  <span className="relative z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#8a531f] transition-transform duration-300 group-hover:rotate-45">
+                    <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.2} />
+                  </span>
                 </button>
-              </motion.div>
+              </Magnetic>
+
+              <button className="group inline-flex items-center gap-2 text-[0.85rem] font-semibold tracking-wide text-white/80 transition duration-300 hover:text-white">
+                <span className="inline-block h-[1px] w-6 bg-white/60 transition-all duration-300 group-hover:w-10 group-hover:bg-[#e8a869]" />
+                <span>Watch the story</span>
+              </button>
             </motion.div>
           </motion.div>
         </AnimatePresence>
+      </motion.div>
+
+      {/* ── Bottom chrome: nav arrows + scroll cue + dots ── */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[6]">
+        {/* Trusted strip */}
+        <div className="pointer-events-auto relative mx-auto max-w-full overflow-hidden border-y border-white/10 bg-black/25 backdrop-blur-md">
+          <div className="flex whitespace-nowrap">
+            <div className="flex shrink-0 animate-marquee items-center gap-10 px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.25em] text-white/65">
+              {[...TRUSTED_MARKS, ...TRUSTED_MARKS].map((mark, i) => (
+                <span key={i} className="inline-flex items-center gap-3">
+                  <span className="inline-block h-1 w-1 rounded-full bg-[#c98545]" />
+                  {mark}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Controls row */}
+        <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8 md:px-12">
+          <button
+            onClick={prevSlide}
+            className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/20 sm:h-12 sm:w-12"
+            aria-label="Previous slide"
+          >
+            <ArrowLeft className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.75} />
+          </button>
+
+          {/* Scroll cue */}
+          <div className="pointer-events-none flex flex-col items-center gap-2 text-white/75">
+            <span className="text-[0.6rem] font-medium uppercase tracking-[0.3em]">
+              Scroll
+            </span>
+            <div className="relative h-8 w-5 rounded-full border border-white/40">
+              <span className="scroll-wheel-dot absolute left-1/2 top-1 h-1.5 w-1.5 rounded-full bg-white" />
+            </div>
+          </div>
+
+          {/* Dots */}
+          <div className="pointer-events-auto flex items-center gap-3">
+            {slides.map((slide, index) => {
+              const isActive = index === current;
+              return (
+                <button
+                  key={slide.id}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                  className="group relative flex h-5 items-center justify-center"
+                >
+                  <motion.span
+                    animate={{
+                      width: isActive ? 32 : 6,
+                      backgroundColor: isActive
+                        ? "rgba(232,168,105,1)"
+                        : "rgba(255,255,255,0.4)",
+                    }}
+                    transition={{ duration: 0.4, ease: TRANSITION_EASE }}
+                    className="block h-[3px] rounded-full shadow-[0_0_8px_rgba(201,133,69,0.6)]"
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={nextSlide}
+            className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/90 backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/20 sm:h-12 sm:w-12"
+            aria-label="Next slide"
+          >
+            <ArrowRight className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.75} />
+          </button>
+        </div>
       </div>
-
-      <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-between px-5 sm:px-8 lg:px-12">
-        <button
-          onClick={prevSlide}
-          className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-slate-900/[0.08] bg-slate-900/[0.04] text-slate-400 backdrop-blur-md transition-all duration-300 hover:border-slate-900/20 hover:bg-slate-900/[0.08] hover:text-slate-900 sm:h-12 sm:w-12"
-          aria-label="Previous slide"
-        >
-          <ArrowLeft className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.5} />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-slate-900/[0.08] bg-slate-900/[0.04] text-slate-400 backdrop-blur-md transition-all duration-300 hover:border-slate-900/20 hover:bg-slate-900/[0.08] hover:text-slate-900 sm:h-12 sm:w-12"
-          aria-label="Next slide"
-        >
-          <ArrowRight className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.5} />
-        </button>
-      </div>
-
-      <div className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 sm:bottom-12">
-        {slides.map((slide, index) => {
-          const isActive = index === current;
-
-          return (
-            <button
-              key={slide.id}
-              onClick={() => goToSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
-              className="group relative flex h-5 items-center justify-center"
-            >
-              <motion.span
-                animate={{
-                  width: isActive ? 28 : 3,
-                  backgroundColor: isActive
-                    ? "rgba(15, 23, 42, 1)"
-                    : "rgba(15, 23, 42, 0.2)",
-                }}
-                transition={{ duration: 0.35, ease: TRANSITION_EASE }}
-                className="block h-[3px] rounded-full"
-              />
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-gradient-to-t from-slate-100/60 to-transparent" />
     </section>
   );
 }

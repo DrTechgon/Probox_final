@@ -291,6 +291,22 @@ export default function PageBackground() {
       {/* ── Film grain (consistent across page) ── */}
       <div className="hero-noise pointer-events-none fixed inset-0 z-0 opacity-[0.35]" />
 
+      {/* ── Subtle grid wash ── */}
+      <div
+        aria-hidden
+        className="bg-grid-soft pointer-events-none fixed inset-0 z-0 opacity-[0.55]"
+      />
+
+      {/* ── Vignette edges for cinematic containment ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 55%, rgba(8, 12, 24, 0.06) 100%)",
+        }}
+      />
+
       {/* ── Parallax blob field ── */}
       <div
         ref={containerRef}

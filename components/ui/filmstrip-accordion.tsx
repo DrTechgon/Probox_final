@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 /* ─── Service data ─────────────────────────────────────────── */
@@ -18,6 +19,7 @@ const SERVICES = [
       "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop",
     tint: "#efe8dd",
     accent: "#7a5a2e",
+    href: "/ai-services-v2",
   },
   {
     id: "security",
@@ -29,6 +31,7 @@ const SERVICES = [
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
     tint: "#e8e4f0",
     accent: "#5a4f8a",
+    href: "#",
   },
   {
     id: "managed-it",
@@ -39,6 +42,7 @@ const SERVICES = [
     image: "/managed-it-abstract.svg",
     tint: "#e0ece5",
     accent: "#3d6b50",
+    href: "#",
   },
   {
     id: "iiot",
@@ -50,6 +54,7 @@ const SERVICES = [
       "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
     tint: "#ede7dc",
     accent: "#7a6330",
+    href: "#",
   },
   {
     id: "network",
@@ -61,6 +66,7 @@ const SERVICES = [
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
     tint: "#e1e8f2",
     accent: "#3d5580",
+    href: "#",
   },
   {
     id: "cloud",
@@ -72,6 +78,7 @@ const SERVICES = [
       "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200&auto=format&fit=crop",
     tint: "#f0e5e1",
     accent: "#8a4f3d",
+    href: "#",
   },
 ];
 
@@ -215,26 +222,29 @@ function Strip({
             </motion.p>
 
             {/* CTA */}
-            <motion.a
-              href="#"
-              className="group/cta mt-5 inline-flex w-fit items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.22em]"
-              style={{ color: service.accent }}
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.34, duration: 0.5, ease: EASE }}
             >
-              Explore Service
-              <span
-                className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover/cta:scale-110"
-                style={{ backgroundColor: `${service.accent}18` }}
+              <Link
+                href={service.href}
+                className="group/cta mt-5 inline-flex w-fit items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[0.22em]"
+                style={{ color: service.accent }}
               >
-                <ArrowUpRight
-                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover/cta:rotate-45"
-                  strokeWidth={2.2}
-                  style={{ color: service.accent }}
-                />
-              </span>
-            </motion.a>
+                Explore Service
+                <span
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover/cta:scale-110"
+                  style={{ backgroundColor: `${service.accent}18` }}
+                >
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover/cta:rotate-45"
+                    strokeWidth={2.2}
+                    style={{ color: service.accent }}
+                  />
+                </span>
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -331,8 +341,8 @@ function MobileStrip({
             </p>
 
             {/* CTA */}
-            <a
-              href="#"
+            <Link
+              href={service.href}
               className="mt-4 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em]"
               style={{ color: service.accent }}
             >
@@ -347,7 +357,7 @@ function MobileStrip({
                   style={{ color: service.accent }}
                 />
               </span>
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
